@@ -8,7 +8,7 @@
     <?php include 'link/links.php'; ?>
     <?php include 'css/style.php'; ?>
 </head>
-<body>
+<body onload="fetch()">
 <nav class="navbar navbar-expand-lg nav_style p-3">
   <a class="navbar-brand pl-5" href="#">COVID-19</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,7 +61,7 @@
   <div class="mb-3">
     <h3 class="text-uppercase text-center mb-5">Covid-19 Updates In India</h3>
   </div>
-  <div class="d-flex justify-content-around align-items-center col-lg-12 col-md-6">
+ <!-- <div class="d-flex justify-content-around align-items-center col-lg-12 col-md-6">
     <div>
       <h1 class="count">1,326,093,247</h1>
       <p>Total Population Of India</p>
@@ -77,6 +77,19 @@
     <div>
       <h1 class="count">111</h1>
       <p>Numbers Of Deaths</p>
+    </div>-->
+    <div class="table-responsive">
+      <table class="table table-bordered text-center table-striped" id="tbval">
+        <tr>
+          <th>Country</th>
+          <th>TotalConfirmed</th>
+          <th>TotalRecovered</th>
+          <th>TotalDeath</th>
+          <th>NewConfirmed</th>
+          <th>NewRecovered</th>
+          <th>NewDeaths</th>
+        </tr>
+      </table>
     </div>
   </div>
 </section>
@@ -317,12 +330,52 @@ jQuery(document).ready(function($)
     time: 2500
 });
 });
+
+
+function fetch(){
+  $.get("https://api.covid19api.com/summary",
+  
+  function(data){
+    var tbval = document.getElementById('tbval');
+    for(var i =1;i<=(data['Countries'].length);i++){
+      var x=tbval.insertRow();
+      x.insertCell(0);
+
+      tbval.rows[i].cells[0].innerHTML = data['Countries'][i-1]['Country'];
+      tbval.rows[i].cells[0].style.background = '#7a4a91';
+      tbval.rows[i].cells[0].style.color = '#fff';
+
+      x.insertCell(1);
+      tbval.rows[i].cells[1].innerHTML = data['Countries'][i-1]['TotalConfirmed'];
+      tbval.rows[i].cells[1].style.background = '#4bb7d8';
+
+      x.insertCell(2);
+      tbval.rows[i].cells[2].innerHTML = data['Countries'][i-1]['TotalRecovered'];
+      tbval.rows[i].cells[2].style.background = '#4bb7d8';
+
+      x.insertCell(3);
+      tbval.rows[i].cells[3].innerHTML = data['Countries'][i-1]['TotalDeaths'];
+      tbval.rows[i].cells[3].style.background = '#f36e23';
+
+      x.insertCell(4);
+      tbval.rows[i].cells[4].innerHTML = data['Countries'][i-1]['NewConfirmed'];
+      tbval.rows[i].cells[4].style.background = '#4bb7d8';
+
+      x.insertCell(5);
+      tbval.rows[i].cells[5].innerHTML = data['Countries'][i-1]['NewRecovered'];
+      tbval.rows[i].cells[5].style.background = '#9cc850';
+
+      x.insertCell(6);
+      tbval.rows[i].cells[6].innerHTML = data['Countries'][i-1]['NewDeaths'];
+      tbval.rows[i].cells[6].style.background = '#f36e23';
+    }
+  }
+
+  );
+}
 </script>
 </body>
 </html>  
-
-
-
 
 <?php
 
