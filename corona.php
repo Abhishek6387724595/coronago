@@ -10,6 +10,7 @@ $response = file_get_contents("https://api.covid19api.com/summary", false, strea
 
 $coronadata = json_decode($response);
 echo "<pre>";
-//echo $response; 
+
+
 print_r($coronadata);
 ?>
