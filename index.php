@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
-    
     <?php include 'link/links.php'; ?>
     <?php include 'css/style.php'; ?>
 </head>
-<body onload="fetch()">
+<body>
 <nav class="navbar navbar-expand-lg nav_style p-3">
   <a class="navbar-brand pl-5" href="#">COVID-19</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,6 +27,12 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#preventid">Preventions</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="indiastatewise.php">IndiaStateWise</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="indiadaywise.php">IndiaDayWise</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#contactid">Contacts</a>
@@ -59,7 +64,7 @@
 
 <section class="corona_update">
   <div class="mb-3">
-    <h3 class="text-uppercase text-center mb-5">Covid-19 Updates In India</h3>
+    <h3 class="text-uppercase text-center mb-5">Covid-19 Updates Of The World</h3>
   </div>
  <!-- <div class="d-flex justify-content-around align-items-center col-lg-12 col-md-6">
     <div>
@@ -89,11 +94,48 @@
           <th>NewRecovered</th>
           <th>NewDeaths</th>
         </tr>
+
+
+<?php
+
+$arrContextOptions=array(
+  "ssl"=>array(
+      "verify_peer"=>false,
+      "verify_peer_name"=>false,
+  ),
+);  
+
+$response = file_get_contents("https://api.covid19api.com/summary", false, stream_context_create($arrContextOptions));
+
+$coronadata = json_decode($response,true);
+//echo "<pre>";
+//print_r($coronadata);
+$worldcount = count($coronadata['Countries']);
+//echo $worldcount;
+$i=1;
+for($i=0;$i < $worldcount;$i++){
+  ?>
+
+    <tr>
+        <td class="bg-dark text-white"><?php echo $coronadata['Countries'][$i]['Country'] ; ?></td>
+        <td class="bg-dark text-white"><?php echo $coronadata['Countries'][$i]['TotalConfirmed'] ; ?></td>
+        <td class="bg-dark text-white"><?php echo $coronadata['Countries'][$i]['TotalRecovered'] ; ?></td>
+        <td class="bg-dark text-white"><?php echo $coronadata['Countries'][$i]['TotalDeaths'] ; ?></td>
+        <td class="bg-dark text-white"><?php echo $coronadata['Countries'][$i]['NewConfirmed'] ; ?></td>
+        <td class="bg-dark text-white"><?php echo $coronadata['Countries'][$i]['NewRecovered'] ; ?></td>
+        <td class="bg-dark text-white"><?php echo $coronadata['Countries'][$i]['NewDeaths'] ; ?></td>
+    </tr>
+
+
+
+
+<?php
+}
+?>
       </table>
     </div>
   </div>
 </section>
-<br>
 
 <!--*******************about section**************------->
 
@@ -323,7 +365,7 @@ $('.count').counterUp({
 -->
 
 <script>
-jQuery(document).ready(function($)
+/*jQuery(document).ready(function($)
 {
   $('.count').counterUp({
     delay: 6,
@@ -372,7 +414,7 @@ function fetch(){
   }
 
   );
-}
+}*/
 </script>
 </body>
 </html>  
