@@ -33,6 +33,9 @@
         <a class="nav-link" href="indiastatewise.php">IndiaStateWise</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="indiadaywise.php">IndiaDayWise</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="http://localhost/coronago/index.php#contactid">Contacts</a>
       </li>
     </ul>

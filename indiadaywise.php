@@ -42,21 +42,21 @@
 
 <!--***********************Corona latest*********************-->
 
-<section class="corona_update">
+<section class="corona_update container-fluid">
   <div class="mb-3">
     <h3 class="text-uppercase text-center my-5">Covid-19 Updates Of India</h3>
   </div>
 
   <div class="table-responsive">
       <table class="table table-bordered text-center table-striped" id="tbval">
-        <tr>
+        <!--<tr>
           <th class="text-capitalize">lastupdatetime</th>
           <th class="text-capitalize">state</th>
           <th class="text-capitalize">confirmed</th>
           <th class="text-capitalize">active</th>
           <th class="text-capitalize">recovered</th>
           <th class="text-capitalize">deaths</th>
-        </tr>
+        </tr>-->
        
 
 <!--</section>-->
@@ -72,27 +72,37 @@ $arrContextOptions=array(
 $response = file_get_contents("https://api.covid19india.org/data.json", false, stream_context_create($arrContextOptions));
 
 $coronalive = json_decode($response,true);
-echo "<pre>";
-print_r($coronalive);
+/*echo "<pre>";
+print_r($coronalive);*/
 $daycount = count($coronalive['cases_time_series']);
 for($i=1;$i<$daycount;$i++){
 
   ?>
-
-    <tr>
-        <td><?php echo $coronalive['cases_time_series'][$i]['dailyconfirmed'] ; ?></td>
-        <td><?php echo $coronalive['cases_time_series'][$i]['dailyrecovered']; ?></td>
-        <td><?php echo $coronalive['cases_time_series'][$i]['dailydeceased']; ?></td>
-        <td><?php echo $coronalive['cases_time_series'][$i]['totalconfirmed']; ?></td>
-        <td><?php echo $coronalive['cases_time_series'][$i]['totaldeceased']; ?></td>
-        <td><?php echo $coronalive['cases_time_series'][$i]['totalrecovered']; ?></td>
+  <tr>
+      <th class="text-left" colspan="6">Date & Month</th>
+  </tr>
+  <tr>
+      <td style="color:white; background-color:black;" colspan="6" class="text-left"><?php $coronalive['cases_time_series'][$i]['date']."<br>" ;?></td>
+  </tr>
+    <tr class="text-capitalize text-white">
+        <td style="color:#fff; background:pink;">Total Confirmed</td>
+        <td style="color:#fff; background:#ffc107;">daily confirmed</td>
+        <td style="color:#fff; background:#008C76FF;">daily Recovered</td>
+        <td style="color:#fff; background:#e91e7f;">daily decreased</td>
+        <td style="color:#fff; background:#4caf50;">Total Recovered</td>
+        <td style="color:#fff; background:#EE2737FF;">Total Decreased</td>
     </tr>
 
-
-
-
+    <tr class="mb-5">
+        <td style="#bed2f3"><?php echo $coronalive['cases_time_series'][$i]['totalconfirmed']."<br>" ;  ?></td>
+        <td style="#eeffe493"><?php echo $coronalive['cases_time_series'][$i]['dailyconfirmed']."<br>" ;  ?></td>
+        <td style="#9ED9CCFF"><?php echo $coronalive['cases_time_series'][$i]['dailyrecovered']."<br>" ;  ?></td>
+        <td style="#fc95c6"><?php echo $coronalive['cases_time_series'][$i]['dailydeceased']."<br>" ;  ?></td>
+        <td style="#88d28b"><?php echo $coronalive['cases_time_series'][$i]['totalrecovered']."<br>" ;  ?></td>
+        <td style="#fb99a1"><?php echo $coronalive['cases_time_series'][$i]['totaldeceased']."<br>" ;  ?></td>
+    </tr>
   <?php
-
+ //  echo $coronalive['cases_time_series'][$i]['totalrecovered']."<br>" ; 
 }?>
     </table>
   </div>
